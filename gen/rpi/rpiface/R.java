@@ -30,13 +30,16 @@ public final class R {
         public static final int button_votar=0x7f070002;
         public static final int button_yes=0x7f07000d;
         public static final int editText_text=0x7f07000b;
-        public static final int menu_settings=0x7f07000f;
+        public static final int imageView1=0x7f070010;
+        public static final int menu_settings=0x7f070011;
+        public static final int textView1=0x7f07000f;
     }
     public static final class layout {
         public static final int activity_menu=0x7f030000;
         public static final int activity_move=0x7f030001;
         public static final int activity_speak=0x7f030002;
         public static final int activity_vote=0x7f030003;
+        public static final int activity_welcome=0x7f030004;
     }
     public static final class menu {
         public static final int activity_menu=0x7f060000;
@@ -61,6 +64,8 @@ public final class R {
         public static final int title_activity_menu=0x7f040002;
         public static final int voice=0x7f04000d;
         public static final int vote=0x7f040005;
+        public static final int welcome=0x7f040011;
+        public static final int welcome_image_description=0x7f040012;
         public static final int yes=0x7f04000b;
     }
     public static final class style {

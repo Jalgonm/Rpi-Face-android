@@ -17,5 +17,7 @@
     <string name="text">Texto</string>
     <string name="record">Grabar</string>
     <string name="send">Enviar</string>
+    <string name="welcome">Bienvenido a Rpi-face</string>
+    <string name="welcome_image_description">Imagen de bienvenida</string>
 
 </resources>
