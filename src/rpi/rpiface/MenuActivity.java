@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -44,7 +45,7 @@ public class MenuActivity extends Activity implements OnClickListener {
 			break;
 		default:
 			Toast.makeText(getApplicationContext(),
-					"Error, esa opción no está implementada",
+					"Error, esa opciï¿½n no estï¿½ implementada",
 					Toast.LENGTH_SHORT).show();
 			break;
 		}
@@ -54,5 +55,19 @@ public class MenuActivity extends Activity implements OnClickListener {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.activity_menu, menu);
 		return true;
+	}
+
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.menu_settings:
+			Toast.makeText(getApplicationContext(),
+					"OpciÃ³n aÃºn no implementada", Toast.LENGTH_SHORT).show();
+			return true;
+		case R.id.menu_exit:
+			finish();
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
 	}
 }

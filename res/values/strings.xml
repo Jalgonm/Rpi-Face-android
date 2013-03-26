@@ -2,7 +2,7 @@
 
     <string name="app_name">RpiFace</string>
     <string name="menu_settings">Configuración</string>
-    <string name="title_activity_menu">Rpi-face</string>
+    <string name="title_activity_welcome">Rpi-face</string>
     <string name="speak">Hablar</string>
     <string name="move">Mover</string>
     <string name="vote">Votar</string>
@@ -19,5 +19,6 @@
     <string name="send">Enviar</string>
     <string name="welcome">Bienvenido a Rpi-face</string>
     <string name="welcome_image_description">Imagen de bienvenida</string>
+    <string name="exit">Salir</string>
 
 </resources>

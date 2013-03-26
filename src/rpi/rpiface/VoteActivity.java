@@ -3,6 +3,7 @@ package rpi.rpiface;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -23,12 +24,6 @@ public class VoteActivity extends Activity implements OnClickListener {
 
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.activity_vote, menu);
-		return true;
-	}
-
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.button_yes:
@@ -40,10 +35,29 @@ public class VoteActivity extends Activity implements OnClickListener {
 
 		default:
 			Toast.makeText(getApplicationContext(),
-					"Error, esa opción no está implementada",
+					"Error, esa opciï¿½n no estï¿½ implementada",
 					Toast.LENGTH_SHORT).show();
 			break;
 		}
 
+	}
+
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.activity_vote, menu);
+		return true;
+	}
+
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.menu_settings:
+			Toast.makeText(getApplicationContext(),
+					"OpciÃ³n aÃºn no implementada", Toast.LENGTH_SHORT).show();
+			return true;
+		case R.id.menu_exit:
+			finish();
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
 	}
 }

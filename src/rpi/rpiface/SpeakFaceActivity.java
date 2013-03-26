@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -43,13 +44,6 @@ public class SpeakFaceActivity extends Activity implements OnClickListener {
 		botonRecord.setOnClickListener(this);
 		botonSend.setOnClickListener(this);
 		Log.v(LOGTAG, "Actividad creada");
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.activity_speak, menu);
-		Log.i(LOGTAG, "Se ha creado el menú con éxito");
-		return true;
 	}
 
 	private void voiceMode() {
@@ -95,7 +89,8 @@ public class SpeakFaceActivity extends Activity implements OnClickListener {
 			}
 
 			AsyncTask<String, Void, Boolean> postAsyncTask = new PostAsyncTask()
-					.execute(text, Url.RPI, Url.RPI_PORT, Url.RPI_PATH, RPI_PARAM);
+					.execute(text, Url.RPI, Url.RPI_PORT, Url.RPI_PATH,
+							RPI_PARAM);
 			try {
 				if (!postAsyncTask.get()) {
 					Toast.makeText(
@@ -121,30 +116,23 @@ public class SpeakFaceActivity extends Activity implements OnClickListener {
 
 	}
 
-	// Conservado por si se quiere hacer privado, de momento p�blico funciona y
-	// se ahorran l�neas de c�digo
-	/*
-	 * private class Get1 extends AsyncTask<String, Float, Integer> {
-	 * 
-	 * protected void onPreExecute() { Log.i(LOGTAG + " Asynctask",
-	 * "Async iniciada"); }
-	 * 
-	 * protected Integer doInBackground(String... param) { String value =
-	 * param[0]; HttpClient httpClient = new DefaultHttpClient();
-	 * List<NameValuePair> params = new LinkedList<NameValuePair>();
-	 * params.add(new BasicNameValuePair(RPI_PARAM, value)); String paramString
-	 * = URLEncodedUtils.format(params, "utf-8"); String url = RPI + RPI_PATH +
-	 * "?" + paramString; Log.i(LOGTAG + " Asynctask" + " Http get:", url);
-	 * HttpGet httpGet = new HttpGet(url); try { HttpResponse response =
-	 * httpClient.execute(httpGet); Log.i(LOGTAG + " Asynctask" +
-	 * " Http Response:", response.toString()); } catch (ClientProtocolException
-	 * e) { e.printStackTrace(); } catch (IOException e) { e.printStackTrace();
-	 * } return null; }
-	 * 
-	 * protected void onPostExecute(Integer bytes) { Log.i(LOGTAG +
-	 * " Asynctask", "Async terminada"); }
-	 * 
-	 * }
-	 */
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.activity_speak, menu);
+		return true;
+	}
+
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.menu_settings:
+			Toast.makeText(getApplicationContext(),
+					"Opción aún no implementada", Toast.LENGTH_SHORT).show();
+			return true;
+		case R.id.menu_exit:
+			finish();
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
+	}
 
 }

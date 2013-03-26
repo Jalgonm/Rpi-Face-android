@@ -6,6 +6,7 @@
     android:layout_alignParentLeft="true"
     android:layout_alignParentRight="true"
     android:layout_alignParentTop="true"
+    android:background="@drawable/fondo"
     android:orientation="vertical" >
 
     <TextView
@@ -14,18 +15,10 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="75dp"
+        android:layout_marginBottom="45dp"
+        android:background="#F7BE81"
         android:text="@string/welcome"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
-    <ImageView
-        android:id="@+id/imageView1"
-        android:layout_width="220dp"
-        android:layout_height="220dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="58dp"
-        android:contentDescription="@string/welcome_image_description"
-        android:src="@drawable/ic_launcher" />
+        android:textAppearance="?android:attr/textAppearanceLargeInverse"
+        android:textColor="#8A4B08" />
 
 </RelativeLayout>
