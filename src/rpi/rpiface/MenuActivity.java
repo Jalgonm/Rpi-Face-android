@@ -1,8 +1,10 @@
 package rpi.rpiface;
 
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -66,7 +68,17 @@ public class MenuActivity extends Activity implements OnClickListener {
 		botonHablar.setOnClickListener(this);
 		botonMover.setOnClickListener(this);
 		botonVotar.setOnClickListener(this);
-
+//		SharedPreferences preferences = PreferenceManager
+//				.getDefaultSharedPreferences(getApplicationContext());
+//		if (!preferences.contains(PreferencesActivity.PREFS_URL)
+//				|| !preferences.contains(PreferencesActivity.PREFS_PORT)
+//				|| !preferences.contains(PreferencesActivity.PREFS_PATH)) {
+//			preferences.edit()
+//					.putString(PreferencesActivity.PREFS_URL, Url.RPI)
+//					.putString(PreferencesActivity.PREFS_PORT, Url.RPI_PORT)
+//					.putString(PreferencesActivity.PREFS_PATH, Url.RPI_PATH)
+//					.commit();
+//		}
 	}
 
 	/**

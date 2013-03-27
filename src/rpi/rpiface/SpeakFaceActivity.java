@@ -6,10 +6,12 @@ import java.util.concurrent.ExecutionException;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.speech.RecognizerIntent;
@@ -91,6 +93,7 @@ public class SpeakFaceActivity extends Activity implements OnClickListener {
 	 */
 	private static final int VR_REQUEST = 31415;
 
+	private SharedPreferences preferences;
 	/**
 	 * Nombre de la aplicación de reconocimiento de voz
 	 */
@@ -121,6 +124,8 @@ public class SpeakFaceActivity extends Activity implements OnClickListener {
 		botonText.setOnClickListener(this);
 		botonSend.setOnClickListener(this);
 
+		preferences = PreferenceManager
+				.getDefaultSharedPreferences(getApplicationContext());
 		Log.v(LOGTAG, "Actividad creada");
 
 	}
@@ -255,7 +260,10 @@ public class SpeakFaceActivity extends Activity implements OnClickListener {
 		// Se crea un postAsynctask que hará la petición post al servidor
 		AsyncTask<String, Void, Boolean> postAsyncTask = new PostAsyncTask();
 		// Se ejecuta el asynctask pasándole los parámetros correspondientes
-		postAsyncTask.execute(message, Url.RPI, Url.RPI_PORT, Url.RPI_PATH,
+		postAsyncTask.execute(message, preferences.getString(
+				PreferencesActivity.PREFS_URL, Url.RPI), preferences.getString(
+				PreferencesActivity.PREFS_PORT, Url.RPI_PORT), preferences
+				.getString(PreferencesActivity.PREFS_PATH, Url.RPI_PATH),
 				RPI_PARAM);
 		try {
 			// Si no hay conexión con el servidor se avisa de ello

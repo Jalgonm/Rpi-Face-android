@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
 
     <string name="app_name">RpiFace</string>
@@ -20,5 +21,13 @@
     <string name="welcome">Bienvenido a Rpi-face</string>
     <string name="welcome_image_description">Imagen de bienvenida</string>
     <string name="exit">Salir</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_preferences">PreferencesActivity</string>
+    <string name="prefs_label_url">"URL del servidor: "</string>
+    <string name="prefs_label_path">"Path relativo: "</string>
+    <string name="prefs_label_port">"Puerto: "</string>
+    <string name="prefs_button_ok">Aceptar</string>
+    <string name="prefs_button_cancel">Cancelar</string>
+    <string name="prefs_error_port">El puerto debe ser un número entero entre 0 y 65535</string>
 
 </resources>
