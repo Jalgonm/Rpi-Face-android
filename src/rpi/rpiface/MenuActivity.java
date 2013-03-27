@@ -121,8 +121,8 @@ public class MenuActivity extends Activity implements OnClickListener {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.menu_settings:
-			Toast.makeText(getApplicationContext(),
-					"Opción aún no implementada", Toast.LENGTH_SHORT).show();
+			Intent intentPrefs = new Intent(this, PreferencesActivity.class);
+			startActivity(intentPrefs);
 			return true;
 		case R.id.menu_exit:
 			finish();

@@ -1,10 +1,18 @@
 package rpi.rpiface;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
-
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
+import android.speech.RecognizerIntent;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -79,6 +87,16 @@ public class SpeakFaceActivity extends Activity implements OnClickListener {
 	Boolean internetConnection = false;
 
 	/**
+	 * Variable para reconocer actividad de reconocimiento de voz
+	 */
+	private static final int VR_REQUEST = 31415;
+
+	/**
+	 * Nombre de la aplicación de reconocimiento de voz
+	 */
+	final String appName = "com.google.android.voicesearch";
+
+	/**
 	 * Crea la actividad
 	 * 
 	 * @param savedInstanceState
@@ -95,13 +113,34 @@ public class SpeakFaceActivity extends Activity implements OnClickListener {
 		botonRecord = (Button) findViewById(R.id.button_record);
 		botonSend = (Button) findViewById(R.id.button_send);
 		editInsert = (EditText) findViewById(R.id.editText_text);
-		voiceMode();
-		// Pone detectores de clicks a cada botón
+
+		// Se pone en la vista de voz por defecto
+		textMode();
+		// Pone detectores de clicks a cada botón y al reconocedor
 		botonVoice.setOnClickListener(this);
 		botonText.setOnClickListener(this);
-		botonRecord.setOnClickListener(this);
 		botonSend.setOnClickListener(this);
+
 		Log.v(LOGTAG, "Actividad creada");
+
+	}
+
+	public void aceptar() {
+		try {
+			startActivity(new Intent(Intent.ACTION_VIEW,
+					Uri.parse("market://details?id=" + appName)));
+		} catch (android.content.ActivityNotFoundException anfe) {
+			startActivity(new Intent(Intent.ACTION_VIEW,
+					Uri.parse("http://play.google.com/store/apps/details?id="
+							+ appName)));
+		}
+	}
+
+	public void cancelar() {
+		Toast.makeText(this,
+				"Sin el software no está disponible esta funcionalidad",
+				Toast.LENGTH_LONG).show();
+		textMode();
 	}
 
 	/**
@@ -112,6 +151,41 @@ public class SpeakFaceActivity extends Activity implements OnClickListener {
 		editInsert.setVisibility(View.GONE);
 		botonRecord.setVisibility(View.VISIBLE);
 		Log.i(LOGTAG, "Se ha pasado al modo voz");
+
+		// Comprueba si se puede hacer reconocimiento de voz
+		PackageManager packManager = getPackageManager();
+		List<ResolveInfo> intActivities = packManager.queryIntentActivities(
+				new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH), 0);
+		if (intActivities.size() != 0) {
+			// Puede hacerse reconocimiento de voz
+			Log.v(LOGTAG, "El dispositivo permite hacer reconocimiento");
+			botonRecord.setOnClickListener(this);
+
+		} else {
+			// El reconocimiento de voz no está soportado
+			Log.v(LOGTAG, "El dispositivo no permite hacer reconocimiento");
+			botonRecord.setEnabled(false);
+
+			AlertDialog.Builder dialogo1 = new AlertDialog.Builder(this);
+			dialogo1.setTitle("No dispone del software de reconocimiento de voz");
+			dialogo1.setMessage("¿Le gustaría instalarlo?");
+			dialogo1.setCancelable(false);
+			dialogo1.setPositiveButton("Si",
+					new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialogo1, int id) {
+							aceptar();
+						}
+					});
+			dialogo1.setNegativeButton("No",
+					new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialogo1, int id) {
+							cancelar();
+						}
+					});
+			dialogo1.show();
+
+		}
+
 	}
 
 	/**
@@ -146,9 +220,13 @@ public class SpeakFaceActivity extends Activity implements OnClickListener {
 			// TODO hacer que reconozca voz
 			// Empieza a grabar si se pulsa el botón de grabación
 			Log.i(LOGTAG + " onclick", "Se ha pulsado el botón de grabación");
-
+			listenToSpeech();
 			break;
 		case R.id.button_send:
+			Log.i(LOGTAG + " onclick", "Se ha pulsado el botón de enviar");
+			// Comprueba el estado de la conexión
+			cd = new ConnectionStatus(getApplicationContext());
+			internetConnection = cd.isConnectingToInternet();
 			// Si no está conectado se sale del método y se avisa de ello.
 			if (!internetConnection) {
 				Toast.makeText(getApplicationContext(),
@@ -158,31 +236,7 @@ public class SpeakFaceActivity extends Activity implements OnClickListener {
 			}
 			// Convierte a string lo que haya en el cuadro de texto
 			String text = editInsert.getText().toString();
-			Log.i(LOGTAG + " onclick", "Se ha pulsado el botón de enviar");
-			Log.v(LOGTAG + " Texto a enviar:", text);
-			// Comprueba el estado de la conexión
-			cd = new ConnectionStatus(getApplicationContext());
-			internetConnection = cd.isConnectingToInternet();
-			// Se crea un postAsynctask que hará la petición post al servidor
-			AsyncTask<String, Void, Boolean> postAsyncTask = new PostAsyncTask();
-			// Se ejecuta el asynctask pasándole los parámetros correspondientes
-			postAsyncTask.execute(text, Url.RPI, Url.RPI_PORT, Url.RPI_PATH,
-					RPI_PARAM);
-			try {
-				// Si no hay conexión con el servidor se avisa de ello
-				if (!postAsyncTask.get()) {
-					Toast.makeText(
-							getApplicationContext(),
-							"Hubo problemas con el servidor. Reinténtelo más tarde.",
-							Toast.LENGTH_SHORT).show();
-				}
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (ExecutionException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			doGet(text);
 			break;
 		default:
 			// Si se pulsa otro botón
@@ -193,6 +247,31 @@ public class SpeakFaceActivity extends Activity implements OnClickListener {
 			break;
 		}
 
+	}
+
+	private void doGet(String message) {
+
+		Log.v(LOGTAG + " Texto a enviar:", message);
+		// Se crea un postAsynctask que hará la petición post al servidor
+		AsyncTask<String, Void, Boolean> postAsyncTask = new PostAsyncTask();
+		// Se ejecuta el asynctask pasándole los parámetros correspondientes
+		postAsyncTask.execute(message, Url.RPI, Url.RPI_PORT, Url.RPI_PATH,
+				RPI_PARAM);
+		try {
+			// Si no hay conexión con el servidor se avisa de ello
+			if (!postAsyncTask.get()) {
+				Toast.makeText(
+						getApplicationContext(),
+						"Hubo problemas con el servidor. Reinténtelo más tarde.",
+						Toast.LENGTH_SHORT).show();
+			}
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -213,8 +292,8 @@ public class SpeakFaceActivity extends Activity implements OnClickListener {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.menu_settings:
-			Toast.makeText(getApplicationContext(),
-					"Opción aún no implementada", Toast.LENGTH_SHORT).show();
+			Intent intentPrefs = new Intent(this, PreferencesActivity.class);
+			startActivity(intentPrefs);
 			return true;
 		case R.id.menu_exit:
 			finish();
@@ -222,6 +301,51 @@ public class SpeakFaceActivity extends Activity implements OnClickListener {
 		default:
 			return super.onOptionsItemSelected(item);
 		}
+	}
+
+	/**
+	 * Instruct the app to listen for user speech input
+	 */
+	private void listenToSpeech() {
+
+		// start the speech recognition intent passing required data
+		Intent listenIntent = new Intent(
+				RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+		// indicate package
+		listenIntent.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE,
+				getClass().getPackage().getName());
+		// message to display while listening
+		listenIntent.putExtra(RecognizerIntent.EXTRA_PROMPT,
+				"Diga la frase a enviar a la cara");
+		// set speech model
+		listenIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+				RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+		// specify number of results to retrieve
+		listenIntent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 10);
+
+		// start listening
+		startActivityForResult(listenIntent, VR_REQUEST);
+	}
+
+	/**
+	 * onActivityResults handles: - retrieving results of speech recognition
+	 * listening - retrieving result of TTS data check
+	 */
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// check speech recognition result
+		if (requestCode == VR_REQUEST && resultCode == RESULT_OK) {
+			// store the returned word list as an ArrayList
+			ArrayList<String> suggestedWords = data
+					.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+			String mostProbableMessage = suggestedWords.get(0);
+			Toast.makeText(getApplicationContext(), mostProbableMessage,
+					Toast.LENGTH_SHORT).show();
+			doGet(mostProbableMessage);
+		}
+
+		// call superclass method
+		super.onActivityResult(requestCode, resultCode, data);
 	}
 
 }

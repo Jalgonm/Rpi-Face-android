@@ -5,6 +5,7 @@ import java.util.concurrent.ExecutionException;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Intent;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -209,8 +210,8 @@ public class MoveFaceActivity extends Activity implements OnClickListener {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.menu_settings:
-			Toast.makeText(getApplicationContext(),
-					"Opción aún no implementada", Toast.LENGTH_SHORT).show();
+			Intent intentPrefs = new Intent(this, PreferencesActivity.class);
+			startActivity(intentPrefs);
 			return true;
 		case R.id.menu_exit:
 			finish();

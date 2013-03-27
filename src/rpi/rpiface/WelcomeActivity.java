@@ -39,7 +39,7 @@ public class WelcomeActivity extends Activity {
 	/**
 	 * Duración de la pantalla de bienvenida
 	 */
-	private static final long SPLASH_DISPLAY_LENGTH = 5000;
+	private static final long SPLASH_DISPLAY_LENGTH = 2000;
 
 	/**
 	 * Crea la actividad
