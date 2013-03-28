@@ -56,6 +56,10 @@ public class SpeakFaceActivity extends Activity implements OnClickListener {
 	private static final String LOGTAG = SpeakFaceActivity.class
 			.getCanonicalName();
 	/**
+	 * Etiqueta del modo actual para guardar estado
+	 */
+	private static final String SPEAK_STATE_MODE = "rpi.rpiface.speak.state.mode";
+	/**
 	 * Botón para cambiar al modo de voz
 	 */
 	Button botonVoice;
@@ -99,6 +103,8 @@ public class SpeakFaceActivity extends Activity implements OnClickListener {
 	 */
 	final String appName = "com.google.android.voicesearch";
 
+	private boolean currentMode;
+
 	/**
 	 * Crea la actividad
 	 * 
@@ -109,6 +115,7 @@ public class SpeakFaceActivity extends Activity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		// Pone la vista activity_speak
 		setContentView(R.layout.activity_speak);
+		currentMode = true;
 		Log.v(LOGTAG, "Se ha cargado la interfaz de SpeakFaceActivity");
 		// Asigna a cada botón su correspondiente botón gráfico
 		botonVoice = (Button) findViewById(R.id.button_voice);
@@ -124,14 +131,46 @@ public class SpeakFaceActivity extends Activity implements OnClickListener {
 
 		preferences = PreferenceManager
 				.getDefaultSharedPreferences(getApplicationContext());
-		
-		if (preferences.getBoolean(PreferencesActivity.PREFS_MODE, true)){
+		restoreState(savedInstanceState, preferences);
+		Log.v(LOGTAG, "Actividad creada");
+
+	}
+
+	/**
+	 * Recupera el estado de la actividad. Si hay un estado guardado
+	 * (por ejemplo, después de un giro de pantalla), recupera el modo
+	 * en el que estaba la actividad antes del evento. Si no, pone el 
+	 * modo por defecto establecido en las preferencias
+	 * @param savedInstanceState Estado guardado
+	 * @param preferences Preferencias
+	 */
+	private void restoreState(Bundle savedInstanceState,
+			SharedPreferences preferences) {
+		if (savedInstanceState != null
+				&& savedInstanceState.containsKey(SPEAK_STATE_MODE)) {
+			// Estado guardado
+			if (savedInstanceState.getBoolean(SPEAK_STATE_MODE, true)) {
+				textMode();
+			} else {
+				voiceMode();
+			}
+		} else if (preferences.getBoolean(PreferencesActivity.PREFS_MODE, true)) {
 			textMode();
 		} else {
 			voiceMode();
 		}
-		Log.v(LOGTAG, "Actividad creada");
-
+	}
+	
+	/**
+	 * Se ejecuta al guardar estado debido a un evento destructivo 
+	 * (como un giro de pantalla o un paso a segundo plano). 
+	 * Guarda el estado de la actividad (en este caso, el modo
+	 * actual).
+	 * @param outState Dónde guardar el estado.
+	 */
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		outState.putBoolean(SPEAK_STATE_MODE, currentMode);
 	}
 
 	public void aceptar() {
@@ -159,6 +198,7 @@ public class SpeakFaceActivity extends Activity implements OnClickListener {
 		botonSend.setVisibility(View.GONE);
 		editInsert.setVisibility(View.GONE);
 		botonRecord.setVisibility(View.VISIBLE);
+		currentMode = false;
 		Log.i(LOGTAG, "Se ha pasado al modo voz");
 
 		// Comprueba si se puede hacer reconocimiento de voz
@@ -204,6 +244,7 @@ public class SpeakFaceActivity extends Activity implements OnClickListener {
 		botonSend.setVisibility(View.VISIBLE);
 		editInsert.setVisibility(View.VISIBLE);
 		botonRecord.setVisibility(View.GONE);
+		currentMode = true;
 		Log.i(LOGTAG, "Se ha pasado al modo texto");
 	}
 
