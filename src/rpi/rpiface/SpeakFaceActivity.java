@@ -313,32 +313,14 @@ public class SpeakFaceActivity extends Activity implements OnClickListener {
 
 		Log.v(LOGTAG + " Texto a enviar:", message);
 		// Se crea un postAsynctask que hará la petición post al servidor
-		AsyncTask<String, Void, Boolean> postAsyncTask = new PostAsyncTask();
+		AsyncTask<String, Void, Boolean> postAsyncTask = new PostAsyncTask(
+				getApplicationContext());
 		// Se ejecuta el asynctask pasándole los parámetros correspondientes
 		postAsyncTask.execute(message, preferences.getString(
 				PreferencesActivity.PREFS_URL, Url.RPI), preferences.getString(
 				PreferencesActivity.PREFS_PORT, Url.RPI_PORT), preferences
 				.getString(PreferencesActivity.PREFS_PATH, Url.RPI_PATH),
 				RPI_PARAM);
-		try {
-			// Si no hay conexión con el servidor se avisa de ello
-			if (!postAsyncTask.get()) {
-				Toast.makeText(
-						getApplicationContext(),
-						"Hubo problemas con el servidor. Reinténtelo más tarde.",
-						Toast.LENGTH_SHORT).show();
-			} else {
-				Toast.makeText(getApplicationContext(),
-						"Enviado correctamente.", Toast.LENGTH_SHORT).show();
-				editInsert.setText("");
-			}
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ExecutionException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 
 	/**

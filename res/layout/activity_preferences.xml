@@ -46,14 +46,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:gravity="center|fill_horizontal"
-                    android:orientation="horizontal" >
+                    android:orientation="horizontal" 
+                    >
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="@string/prefs_label_url"
-                        android:textColor="#AAAAAA" />
+                        android:textColor="#AAAAAA" 
+                        android:layout_marginLeft="10dp"/>
 
                     <EditText
                         android:id="@+id/prefs_field_url"
@@ -61,7 +63,9 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:background="@android:color/white"
-                        android:inputType="textUri" />
+                        android:inputType="textUri"
+                        android:layout_marginRight="10dp"
+                         />
                 </LinearLayout>
 
                 <LinearLayout
@@ -75,7 +79,8 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="0.5"
                         android:text="@string/prefs_label_port"
-                        android:textColor="#AAAAAA" />
+                        android:textColor="#AAAAAA" 
+                        android:layout_marginLeft="10dp"/>
 
                     <EditText
                         android:id="@+id/prefs_field_port"
@@ -83,7 +88,8 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="0.5"
                         android:background="@android:color/white"
-                        android:inputType="number" />
+                        android:inputType="number" 
+                        android:layout_marginRight="10dp"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -97,7 +103,8 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="0.5"
                         android:text="@string/prefs_label_path"
-                        android:textColor="#AAAAAA" />
+                        android:textColor="#AAAAAA" 
+                        android:layout_marginLeft="10dp"/>
 
                     <EditText
                         android:id="@+id/prefs_field_path"
@@ -105,7 +112,8 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="0.5"
                         android:background="@android:color/white"
-                        android:inputType="text" />
+                        android:inputType="text" 
+                        android:layout_marginRight="10dp"/>
                 </LinearLayout>
             </LinearLayout>
 
