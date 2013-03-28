@@ -60,6 +60,10 @@ public class SpeakFaceActivity extends Activity implements OnClickListener {
 	 */
 	private static final String SPEAK_STATE_MODE = "rpi.rpiface.speak.state.mode";
 	/**
+	 * Etiqueta del texto actualmente introducido para guardar estado
+	 */
+	private static final String SAVED_TEXT = "rpi.rpiface.text.saved";
+	/**
 	 * Botón para cambiar al modo de voz
 	 */
 	Button botonVoice;
@@ -137,12 +141,15 @@ public class SpeakFaceActivity extends Activity implements OnClickListener {
 	}
 
 	/**
-	 * Recupera el estado de la actividad. Si hay un estado guardado
-	 * (por ejemplo, después de un giro de pantalla), recupera el modo
-	 * en el que estaba la actividad antes del evento. Si no, pone el 
-	 * modo por defecto establecido en las preferencias
-	 * @param savedInstanceState Estado guardado
-	 * @param preferences Preferencias
+	 * Recupera el estado de la actividad. Si hay un estado guardado (por
+	 * ejemplo, después de un giro de pantalla), recupera el modo en el que
+	 * estaba la actividad antes del evento. Si no, pone el modo por defecto
+	 * establecido en las preferencias
+	 * 
+	 * @param savedInstanceState
+	 *            Estado guardado
+	 * @param preferences
+	 *            Preferencias
 	 */
 	private void restoreState(Bundle savedInstanceState,
 			SharedPreferences preferences) {
@@ -151,6 +158,7 @@ public class SpeakFaceActivity extends Activity implements OnClickListener {
 			// Estado guardado
 			if (savedInstanceState.getBoolean(SPEAK_STATE_MODE, true)) {
 				textMode();
+				editInsert.setText(savedInstanceState.getString(SAVED_TEXT));
 			} else {
 				voiceMode();
 			}
@@ -160,17 +168,19 @@ public class SpeakFaceActivity extends Activity implements OnClickListener {
 			voiceMode();
 		}
 	}
-	
+
 	/**
-	 * Se ejecuta al guardar estado debido a un evento destructivo 
-	 * (como un giro de pantalla o un paso a segundo plano). 
-	 * Guarda el estado de la actividad (en este caso, el modo
-	 * actual).
-	 * @param outState Dónde guardar el estado.
+	 * Se ejecuta al guardar estado debido a un evento destructivo (como un giro
+	 * de pantalla o un paso a segundo plano). Guarda el estado de la actividad
+	 * (en este caso, el modo actual).
+	 * 
+	 * @param outState
+	 *            Dónde guardar el estado.
 	 */
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 		outState.putBoolean(SPEAK_STATE_MODE, currentMode);
+		outState.putString(SAVED_TEXT, editInsert.getText().toString());
 	}
 
 	public void aceptar() {
@@ -317,6 +327,10 @@ public class SpeakFaceActivity extends Activity implements OnClickListener {
 						getApplicationContext(),
 						"Hubo problemas con el servidor. Reinténtelo más tarde.",
 						Toast.LENGTH_SHORT).show();
+			} else {
+				Toast.makeText(getApplicationContext(),
+						"Enviado correctamente.", Toast.LENGTH_SHORT).show();
+				editInsert.setText("");
 			}
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block

@@ -38,6 +38,7 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:ems="10"
+        android:hint="@string/editText_text_hint"
         android:inputType="textMultiLine" >
 
         <requestFocus />

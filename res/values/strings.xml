@@ -33,5 +33,6 @@
     <string name="prefs_label_defaultMode">Modo de enviar mensajes predeterminado:</string>
     <string name="prefs_radio_textMode">Texto</string>
     <string name="prefs_radio_voiceMode">Voz</string>
+    <string name="editText_text_hint">Introduzca el texto a enviar a la cara</string>
 
 </resources>

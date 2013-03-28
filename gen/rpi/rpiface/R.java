@@ -65,6 +65,7 @@ public final class R {
     public static final class string {
         public static final int angry=0x7f040008;
         public static final int app_name=0x7f040000;
+        public static final int editText_text_hint=0x7f040020;
         public static final int exit=0x7f040013;
         public static final int happy=0x7f040006;
         public static final int hello_world=0x7f040014;
