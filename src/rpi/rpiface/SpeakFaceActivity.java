@@ -117,8 +117,6 @@ public class SpeakFaceActivity extends Activity implements OnClickListener {
 		botonSend = (Button) findViewById(R.id.button_send);
 		editInsert = (EditText) findViewById(R.id.editText_text);
 
-		// Se pone en la vista de voz por defecto
-		textMode();
 		// Pone detectores de clicks a cada botón y al reconocedor
 		botonVoice.setOnClickListener(this);
 		botonText.setOnClickListener(this);
@@ -126,6 +124,12 @@ public class SpeakFaceActivity extends Activity implements OnClickListener {
 
 		preferences = PreferenceManager
 				.getDefaultSharedPreferences(getApplicationContext());
+		
+		if (preferences.getBoolean(PreferencesActivity.PREFS_MODE, true)){
+			textMode();
+		} else {
+			voiceMode();
+		}
 		Log.v(LOGTAG, "Actividad creada");
 
 	}

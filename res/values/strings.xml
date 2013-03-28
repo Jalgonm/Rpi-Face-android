@@ -29,5 +29,9 @@
     <string name="prefs_button_ok">Aceptar</string>
     <string name="prefs_button_cancel">Cancelar</string>
     <string name="prefs_error_port">El puerto debe ser un número entero entre 0 y 65535</string>
+    <string name="prefs_button_restoreDefault">Restablecer predeterminados</string>
+    <string name="prefs_label_defaultMode">Modo de enviar mensajes predeterminado:</string>
+    <string name="prefs_radio_textMode">Texto</string>
+    <string name="prefs_radio_voiceMode">Voz</string>
 
 </resources>
