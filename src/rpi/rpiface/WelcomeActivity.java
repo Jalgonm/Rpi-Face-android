@@ -60,12 +60,12 @@ public class WelcomeActivity extends Activity {
 	/**
 	 * Clase runnable que se ejecutará el terminar el tiempo establacido
 	 * 
-	 * @return
+	 * @return Runnable que inicia la actividad principal.
 	 */
 	private Runnable getRunnableStartApp() {
 		Runnable runnable = new Runnable() {
 			/**
-			 * Método run de runnable
+			 * Inicia la actividad principal
 			 */
 			public void run() {
 

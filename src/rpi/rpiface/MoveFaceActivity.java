@@ -64,14 +64,6 @@ public class MoveFaceActivity extends Activity implements OnClickListener {
 	 */
 	private Button botonNeutral;
 	/**
-	 * Objeto para comprobar la conexión
-	 */
-	private ConnectionStatus cd;
-	/**
-	 * Booleano donde se guardará el estado de la conexión
-	 */
-	Boolean internetConnection = false;
-	/**
 	 * Parámetro de la petición get
 	 */
 	private final String RPI_PARAM = "face";
@@ -80,7 +72,9 @@ public class MoveFaceActivity extends Activity implements OnClickListener {
 	 */
 	private static final String LOGTAG = MoveFaceActivity.class
 			.getCanonicalName();
-
+	/**
+	 * Preferencias del usuario
+	 */
 	private SharedPreferences preferences;
 
 	/**
@@ -121,8 +115,8 @@ public class MoveFaceActivity extends Activity implements OnClickListener {
 	 */
 	public void onClick(View v) {
 		// Se comprueba el estado de la conexión
-		cd = new ConnectionStatus(getApplicationContext());
-		internetConnection = cd.isConnectingToInternet();
+		ConnectionStatus cd = new ConnectionStatus(getApplicationContext());
+		boolean internetConnection = cd.isConnectingToInternet();
 
 		// Si no se está conectado se avisa y se sale del método
 		if (!internetConnection) {
@@ -173,32 +167,19 @@ public class MoveFaceActivity extends Activity implements OnClickListener {
 	 * servidor. Además comprueba que la conexión se haya hecho correctamente.
 	 ** 
 	 ** @param index
-	 *            Nmero que indica el movimiento a realizar por la cara
+	 *            Número que indica el movimiento a realizar por la cara
 	 */
 	private void doGet(int index) {
 		// Se crea un nuego getAsynctask para hacer la petición get.
-		AsyncTask<String, Float, Boolean> getAsyncTask = new GetAsyncTask();
+		AsyncTask<String, Float, Boolean> getAsyncTask = new GetAsyncTask(
+				getApplicationContext());
 		// Se ejecuta el nuevo asynctask
 		getAsyncTask.execute(Integer.toString(index), preferences.getString(
 				PreferencesActivity.PREFS_URL, Url.RPI), preferences.getString(
 				PreferencesActivity.PREFS_PORT, Url.RPI_PORT), preferences
 				.getString(PreferencesActivity.PREFS_PATH, Url.RPI_PATH),
 				RPI_PARAM);
-		try {
-			// Si hubo proglemas con la conexión se alerta.
-			if (!getAsyncTask.get()) {
-				Toast.makeText(
-						getApplicationContext(),
-						"Hubo problemas con el servidor. Reinténtelo más tarde.",
-						Toast.LENGTH_SHORT).show();
-			}
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ExecutionException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
 	}
 
 	/**

@@ -11,8 +11,11 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
 /**
  * Copyright (C) 2013 Javier García, Julio Alberto González
@@ -42,6 +45,14 @@ public class GetAsyncTask extends AsyncTask<String, Float, Boolean> {
 	// Etiqueta del log
 	private static final String LOGTAG = GetAsyncTask.class.getCanonicalName();
 
+	private Context context;
+	/**
+	 * Crea un nuevo GetAsyncTask.
+	 * @param context Contexto de la aplicación.
+	 */
+	public GetAsyncTask(Context context) {
+		this.context=context;
+	}
 	/**
 	 * Se ejecuta al principio
 	 */
@@ -99,10 +110,19 @@ public class GetAsyncTask extends AsyncTask<String, Float, Boolean> {
 	/**
 	 * Se ejecuta al final
 	 * 
-	 * @param bytes
+	 * @param result Resultado de la tarea en segundo plano
 	 */
-	protected void onPostExecute(Integer bytes) {
+	protected void onPostExecute(Boolean result) {
 		Log.i(LOGTAG + " Asynctask", "Async terminada");
+		if (!result) {
+			Toast.makeText(
+					context,
+					"Hubo problemas con el servidor. Reinténtelo más tarde.",
+					Toast.LENGTH_SHORT).show();
+		} else {
+			Toast.makeText(context,
+					"Enviado correctamente.", Toast.LENGTH_SHORT).show();
+		}
 	}
 
 }
