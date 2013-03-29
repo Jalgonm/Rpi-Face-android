@@ -2,7 +2,6 @@ package rpi.rpiface;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;

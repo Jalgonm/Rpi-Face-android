@@ -1,7 +1,5 @@
 package rpi.rpiface;
 
-import java.util.concurrent.ExecutionException;
-
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -179,7 +177,7 @@ public class MoveFaceActivity extends Activity implements OnClickListener {
 				PreferencesActivity.PREFS_PORT, Url.RPI_PORT), preferences
 				.getString(PreferencesActivity.PREFS_PATH, Url.RPI_PATH),
 				RPI_PARAM);
-		
+
 	}
 
 	/**

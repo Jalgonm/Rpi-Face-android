@@ -22,7 +22,7 @@
     <string name="welcome_image_description">Imagen de bienvenida</string>
     <string name="exit">Salir</string>
     <string name="hello_world">Hello world!</string>
-    <string name="title_activity_preferences">PreferencesActivity</string>
+    <string name="title_activity_preferences">Preferencias</string>
     <string name="prefs_label_url">"URL del servidor: "</string>
     <string name="prefs_label_path">"Path relativo: "</string>
     <string name="prefs_label_port">"Puerto: "</string>
