@@ -1,8 +1,12 @@
 package rpi.rpiface;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -31,10 +35,22 @@ import android.widget.Toast;
  * @since 2013-03-26
  * 
  */
-// TODO sistema de votaciones
+
 public class VoteActivity extends Activity implements OnClickListener {
+
+	/**
+	 * Etiqueta para el log
+	 */
+	private static final String LOGTAG = SpeakFaceActivity.class
+			.getCanonicalName();
+
+	/**
+	 * Parámetro usado en la petición postS
+	 */
+	private final String RPI_PARAM = "vote";
 	Button botonYes;
 	Button botonNo;
+	private SharedPreferences preferences;
 
 	/*
 	 * (non-Javadoc)
@@ -49,6 +65,8 @@ public class VoteActivity extends Activity implements OnClickListener {
 		botonNo = (Button) findViewById(R.id.button_no);
 		botonYes.setOnClickListener(this);
 		botonNo.setOnClickListener(this);
+		preferences = PreferenceManager
+				.getDefaultSharedPreferences(getApplicationContext());
 
 	}
 
@@ -60,19 +78,35 @@ public class VoteActivity extends Activity implements OnClickListener {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.button_yes:
-
+			doPost(1);
 			break;
 		case R.id.button_no:
-
+			doPost(0);
 			break;
 
 		default:
 			Toast.makeText(getApplicationContext(),
-					"Error, esa opci�n no est� implementada",
+					"Error, esa opción no está implementada",
 					Toast.LENGTH_SHORT).show();
 			break;
 		}
 
+	}
+
+	private void doPost(int vote) {
+		String voteString = Integer.toString(vote);
+		String rpi = preferences.getString(PreferencesActivity.PREFS_URL,
+				Url.RPI);
+		String rpiPort = preferences.getString(PreferencesActivity.PREFS_PORT,
+				Url.RPI_PORT);
+		String rpiPath = preferences.getString(PreferencesActivity.PREFS_PATH,
+				Url.RPI_PATH);
+		Log.v(LOGTAG + " Voto a enviar:", voteString);
+		// Se crea un postAsynctask que hará la petición post al servidor
+		AsyncTask<String, Void, Boolean> postAsyncTask = new PostAsyncTask(
+				getApplicationContext());
+		// Se ejecuta el asynctask pasándole los parámetros correspondientes
+		postAsyncTask.execute(voteString, rpi, rpiPort, rpiPath, RPI_PARAM);
 	}
 
 	/*

@@ -168,15 +168,19 @@ public class MoveFaceActivity extends Activity implements OnClickListener {
 	 *            Número que indica el movimiento a realizar por la cara
 	 */
 	private void doGet(int index) {
+		String value = Integer.toString(index);
+		String rpi = preferences.getString(PreferencesActivity.PREFS_URL,
+				Url.RPI);
+		String rpiPort = preferences.getString(PreferencesActivity.PREFS_PORT,
+				Url.RPI_PORT);
+		String rpiPath = preferences.getString(PreferencesActivity.PREFS_PATH,
+				Url.RPI_PATH);
+
 		// Se crea un nuego getAsynctask para hacer la petición get.
 		AsyncTask<String, Float, Boolean> getAsyncTask = new GetAsyncTask(
 				getApplicationContext());
 		// Se ejecuta el nuevo asynctask
-		getAsyncTask.execute(Integer.toString(index), preferences.getString(
-				PreferencesActivity.PREFS_URL, Url.RPI), preferences.getString(
-				PreferencesActivity.PREFS_PORT, Url.RPI_PORT), preferences
-				.getString(PreferencesActivity.PREFS_PATH, Url.RPI_PATH),
-				RPI_PARAM);
+		getAsyncTask.execute(value, rpi, rpiPort, rpiPath, RPI_PARAM);
 
 	}
 

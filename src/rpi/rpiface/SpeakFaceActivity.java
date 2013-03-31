@@ -295,7 +295,7 @@ public class SpeakFaceActivity extends Activity implements OnClickListener {
 			}
 			// Convierte a string lo que haya en el cuadro de texto
 			String text = editInsert.getText().toString();
-			doGet(text);
+			doPost(text);
 			break;
 		default:
 			// Si se pulsa otro botón
@@ -308,18 +308,19 @@ public class SpeakFaceActivity extends Activity implements OnClickListener {
 
 	}
 
-	private void doGet(String message) {
-
+	private void doPost(String message) {
+		String rpi = preferences.getString(PreferencesActivity.PREFS_URL,
+				Url.RPI);
+		String rpiPort = preferences.getString(PreferencesActivity.PREFS_PORT,
+				Url.RPI_PORT);
+		String rpiPath = preferences.getString(PreferencesActivity.PREFS_PATH,
+				Url.RPI_PATH);
 		Log.v(LOGTAG + " Texto a enviar:", message);
 		// Se crea un postAsynctask que hará la petición post al servidor
 		AsyncTask<String, Void, Boolean> postAsyncTask = new PostAsyncTask(
 				getApplicationContext());
 		// Se ejecuta el asynctask pasándole los parámetros correspondientes
-		postAsyncTask.execute(message, preferences.getString(
-				PreferencesActivity.PREFS_URL, Url.RPI), preferences.getString(
-				PreferencesActivity.PREFS_PORT, Url.RPI_PORT), preferences
-				.getString(PreferencesActivity.PREFS_PATH, Url.RPI_PATH),
-				RPI_PARAM);
+		postAsyncTask.execute(message, rpi, rpiPort, rpiPath, RPI_PARAM);
 	}
 
 	/**
@@ -389,7 +390,7 @@ public class SpeakFaceActivity extends Activity implements OnClickListener {
 			String mostProbableMessage = suggestedWords.get(0);
 			Toast.makeText(getApplicationContext(), mostProbableMessage,
 					Toast.LENGTH_SHORT).show();
-			doGet(mostProbableMessage);
+			doPost(mostProbableMessage);
 		}
 
 		// call superclass method
