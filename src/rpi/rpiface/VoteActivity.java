@@ -87,12 +87,15 @@ public class VoteActivity extends Activity implements OnClickListener {
 	 *            Objeto sobre el cual se ha hecho click
 	 */
 	public void onClick(View v) {
+
 		switch (v.getId()) {
 		case R.id.button_yes:
-			doPost(1);
+			Log.v(LOGTAG, "Se ha pulsado en el botón positivo");
+			doPost(true);
 			break;
 		case R.id.button_no:
-			doPost(0);
+			Log.v(LOGTAG, "Se ha pulsado en el botón negativo");
+			doPost(false);
 			break;
 
 		default:
@@ -110,21 +113,21 @@ public class VoteActivity extends Activity implements OnClickListener {
 	 * @param vote
 	 *            Si es 1 es un voto positivo, si es 0 es un voto negativo
 	 */
-	private void doPost(int vote) {
+	private void doPost(boolean vote) {
 
-		String voteString = Integer.toString(vote);
 		String rpi = preferences.getString(PreferencesActivity.PREFS_URL,
 				Url.RPI);
 		String rpiPort = preferences.getString(PreferencesActivity.PREFS_PORT,
 				Url.RPI_PORT);
 		String rpiPath = preferences.getString(PreferencesActivity.PREFS_PATH,
 				Url.RPI_PATH);
-		Log.v(LOGTAG + " Voto a enviar:", voteString);
+		Log.v(LOGTAG + " Voto a enviar:", vote ? "Positivo" : "Negativo");
 		// Se crea un postAsynctask que hará la petición post al servidor
 		AsyncTask<String, Void, Boolean> postAsyncTask = new PostAsyncTask(
 				getApplicationContext());
 		// Se ejecuta el asynctask pasándole los parámetros correspondientes
-		postAsyncTask.execute(voteString, rpi, rpiPort, rpiPath, RPI_PARAM);
+		postAsyncTask.execute(vote ? "1" : "0", rpi, rpiPort, rpiPath,
+				RPI_PARAM);
 	}
 
 	/**
