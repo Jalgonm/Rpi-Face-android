@@ -103,7 +103,7 @@ public class GetAsyncTask extends AsyncTask<String, Float, Boolean> {
 					response.toString());
 		} catch (ClientProtocolException e) {
 			Log.i(LOGTAG + " Asynctask" + " Http Response:",
-					"Error en el protocolo httml");
+					"Error en el protocolo http");
 			e.printStackTrace();
 			return false;
 		} catch (IOException e) {

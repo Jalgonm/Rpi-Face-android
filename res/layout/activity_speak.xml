@@ -40,8 +40,6 @@
         android:ems="10"
         android:hint="@string/editText_text_hint"
         android:inputType="textMultiLine" >
-
-        <requestFocus />
     </EditText>
 
     <Button

@@ -41,36 +41,30 @@
             android:text="@string/send" />
     </LinearLayout>
 
-    <ScrollView
-        android:id="@+id/prefs_layout_main"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/layout_send"
         android:layout_below="@id/layout_mode"
-        android:background="@android:color/black" >
+        android:background="@android:color/black"
+        android:orientation="vertical" >
 
-        <LinearLayout
+        <Button
+            android:id="@+id/button_record"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/record" />
 
-            <Button
-                android:id="@+id/button_record"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="@string/record" />
-
-            <EditText
-                android:id="@+id/editText_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="@string/editText_text_hint"
-                android:inputType="textMultiLine" >
-
-                <requestFocus />
-            </EditText>
-        </LinearLayout>
-    </ScrollView>
+        <EditText
+            android:id="@+id/editText_text"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="@string/editText_text_hint"
+            android:inputType="textMultiLine" >
+        </EditText>
+    </LinearLayout>
 
 </RelativeLayout>

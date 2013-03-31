@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -19,6 +20,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -121,7 +124,7 @@ public class SpeakFaceActivity extends Activity implements OnClickListener {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		// Pone la vista activity_speak
-		setContentView(R.layout.activity_speak);
+		setContentView(R.layout.activity_speakmod);
 		currentMode = true;
 		Log.v(LOGTAG, "Se ha cargado la interfaz de SpeakFaceActivity");
 		// Asigna a cada botón su correspondiente botón gráfico
@@ -195,6 +198,9 @@ public class SpeakFaceActivity extends Activity implements OnClickListener {
 		botonRecord.setVisibility(View.VISIBLE);
 		currentMode = false;
 		Log.i(LOGTAG, "Se ha pasado al modo voz");
+		botonRecord.requestFocus();
+		getWindow().setSoftInputMode(
+				WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
 		// Comprueba si se puede hacer reconocimiento de voz
 		PackageManager packManager = getPackageManager();
@@ -210,23 +216,23 @@ public class SpeakFaceActivity extends Activity implements OnClickListener {
 			Log.v(LOGTAG, "El dispositivo no permite hacer reconocimiento");
 			botonRecord.setEnabled(false);
 
-			AlertDialog.Builder dialogo1 = new AlertDialog.Builder(this);
-			dialogo1.setTitle("No dispone del software de reconocimiento de voz");
-			dialogo1.setMessage("¿Le gustaría instalarlo?");
-			dialogo1.setCancelable(false);
-			dialogo1.setPositiveButton("Si",
+			AlertDialog.Builder dialogo = new AlertDialog.Builder(this);
+			dialogo.setTitle("No dispone del software de reconocimiento de voz");
+			dialogo.setMessage("¿Le gustaría instalarlo?");
+			dialogo.setCancelable(false);
+			dialogo.setPositiveButton("Si",
 					new DialogInterface.OnClickListener() {
 						public void onClick(DialogInterface dialogo1, int id) {
 							aceptar();
 						}
 					});
-			dialogo1.setNegativeButton("No",
+			dialogo.setNegativeButton("No",
 					new DialogInterface.OnClickListener() {
 						public void onClick(DialogInterface dialogo1, int id) {
 							cancelar();
 						}
 					});
-			dialogo1.show();
+			dialogo.show();
 
 		}
 
@@ -267,6 +273,9 @@ public class SpeakFaceActivity extends Activity implements OnClickListener {
 		editInsert.setVisibility(View.VISIBLE);
 		botonRecord.setVisibility(View.GONE);
 		currentMode = true;
+		editInsert.requestFocus();
+		InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+		imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
 		Log.i(LOGTAG, "Se ha pasado al modo texto");
 	}
 
@@ -289,7 +298,6 @@ public class SpeakFaceActivity extends Activity implements OnClickListener {
 			textMode();
 			break;
 		case R.id.button_record:
-			// TODO hacer que reconozca voz
 			// Empieza a grabar si se pulsa el botón de grabación
 			Log.i(LOGTAG + " onclick", "Se ha pulsado el botón de grabación");
 			listenToSpeech();
