@@ -52,15 +52,32 @@ public class PreferencesActivity extends Activity implements OnClickListener {
 	 * Nombre del campo para el modo en las preferencias
 	 */
 	public static final String PREFS_MODE = "rpi.rpiface.prefs.mode";
-
+	/**
+	 * Preferencias del usuario
+	 */
 	private SharedPreferences preferences;
+	/**
+	 * Cuadro de texto para editar la url
+	 */
 	private EditText editUrl;
+	/**
+	 * Cuadro de texto para editar el puerto
+	 */
 	private EditText editPort;
+	/**
+	 * Cuadro de texto para editar el path
+	 */
 	private EditText editPath;
+	/**
+	 * Radiogroup para seleccionar el modo por defecto de la actividad SpeakFace
+	 */
 	private RadioGroup radioMode;
+
 	/**
 	 * Crea la actividad para modificar las preferencias
-	 * @param savedInstanceState Estado guardado de la actividad. No se usa.
+	 * 
+	 * @param savedInstanceState
+	 *            Estado guardado de la actividad. No se usa.
 	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -85,7 +102,9 @@ public class PreferencesActivity extends Activity implements OnClickListener {
 
 	/**
 	 * Carga los valores de las preferencias en los campos.
-	 * @param preferences Objeto SharedPreferences con las preferencias.
+	 * 
+	 * @param preferences
+	 *            Objeto SharedPreferences con las preferencias.
 	 */
 	private void loadPreferences(SharedPreferences preferences) {
 		editUrl.setText(preferences.getString(PREFS_URL, Url.RPI));
@@ -95,6 +114,7 @@ public class PreferencesActivity extends Activity implements OnClickListener {
 				.check(preferences.getBoolean(PREFS_MODE, true) ? R.id.prefs_radio_textMode
 						: R.id.prefs_radio_voiceMode);
 	}
+
 	/**
 	 * Crea el menú de opciones
 	 */
@@ -106,14 +126,19 @@ public class PreferencesActivity extends Activity implements OnClickListener {
 	}
 
 	/**
-	 * Intenta guardar los valores de los campos en las preferencias. 
-	 * Si algún valor es incorrecto, muestra un mensaje de error y 
-	 * devuelve <b>false</b>. En caso contrario, guarda los valores
-	 * y devuelve <b>true</b>
-	 * @param preferences Dónde guardar las preferencias
-	 * @return <p><b>true</b> si se guardó con éxito.</p>
-	 * 			<p><b>false</b> si hubo algún error. Si este método devuelve
-	 * 			<b>false</b>, el objeto <i>preferences</i> no ha sido modificado.</p>
+	 * Intenta guardar los valores de los campos en las preferencias. Si algún
+	 * valor es incorrecto, muestra un mensaje de error y devuelve <b>false</b>.
+	 * En caso contrario, guarda los valores y devuelve <b>true</b>
+	 * 
+	 * @param preferences
+	 *            Dónde guardar las preferencias
+	 * @return <p>
+	 *         <b>true</b> si se guardó con éxito.
+	 *         </p>
+	 *         <p>
+	 *         <b>false</b> si hubo algún error. Si este método devuelve
+	 *         <b>false</b>, el objeto <i>preferences</i> no ha sido modificado.
+	 *         </p>
 	 */
 	private boolean savePreferences(SharedPreferences preferences) {
 		// obtener valores de los campos
@@ -144,10 +169,10 @@ public class PreferencesActivity extends Activity implements OnClickListener {
 		return true;
 
 	}
-	
+
 	/**
-	 * Restablece los valores predeterminados en los campos de URL,
-	 * puerto y path.
+	 * Restablece los valores predeterminados en los campos de URL, puerto y
+	 * path.
 	 */
 	private void restoreDefault() {
 		editUrl.setText(Url.RPI);

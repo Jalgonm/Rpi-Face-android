@@ -65,25 +65,25 @@ public class SpeakFaceActivity extends Activity implements OnClickListener {
 	/**
 	 * Botón para cambiar al modo de voz
 	 */
-	Button botonVoice;
+	private Button botonVoice;
 	/**
 	 * Botón para cambiar al modo texto
 	 */
-	Button botonText;
+	private Button botonText;
 	/**
 	 * Botón para grabar voz
 	 */
-	Button botonRecord;
+	private Button botonRecord;
 	/**
 	 * Botón para enviar el texto
 	 */
-	Button botonSend;
+	private Button botonSend;
 	/**
 	 * Cuadro de texto para insertar el mensaje
 	 */
-	EditText editInsert;
+	private EditText editInsert;
 	/**
-	 * Parámetro usado en la petición postS
+	 * Parámetro usado en la petición post
 	 */
 	private final String RPI_PARAM = "message";
 	/**
@@ -93,19 +93,23 @@ public class SpeakFaceActivity extends Activity implements OnClickListener {
 	/**
 	 * Booleano que guardará el estado de la conexión
 	 */
-	Boolean internetConnection = false;
+	private Boolean internetConnection = false;
 
 	/**
 	 * Variable para reconocer actividad de reconocimiento de voz
 	 */
 	private static final int VR_REQUEST = 31415;
-
+	/**
+	 * Preferencias del usuario
+	 */
 	private SharedPreferences preferences;
 	/**
 	 * Nombre de la aplicación de reconocimiento de voz
 	 */
 	final String appName = "com.google.android.voicesearch";
-
+	/**
+	 * Guarda el modo actual para su posterior recuperación
+	 */
 	private boolean currentMode;
 
 	/**
@@ -182,26 +186,8 @@ public class SpeakFaceActivity extends Activity implements OnClickListener {
 		outState.putString(SAVED_TEXT, editInsert.getText().toString());
 	}
 
-	public void aceptar() {
-		try {
-			startActivity(new Intent(Intent.ACTION_VIEW,
-					Uri.parse("market://details?id=" + appName)));
-		} catch (android.content.ActivityNotFoundException anfe) {
-			startActivity(new Intent(Intent.ACTION_VIEW,
-					Uri.parse("http://play.google.com/store/apps/details?id="
-							+ appName)));
-		}
-	}
-
-	public void cancelar() {
-		Toast.makeText(this,
-				"Sin el software no está disponible esta funcionalidad",
-				Toast.LENGTH_LONG).show();
-		textMode();
-	}
-
 	/**
-	 * Switches the interface to the voice mode.
+	 * Cambia la interfaz al modo voz
 	 */
 	private void voiceMode() {
 		botonSend.setVisibility(View.GONE);
@@ -247,7 +233,34 @@ public class SpeakFaceActivity extends Activity implements OnClickListener {
 	}
 
 	/**
-	 * Switches the interface to the text mode.
+	 * Se ejecuta si se pulsa el botón aceptar en el cuadro de diálogo, instala
+	 * el software necesario para el reconocimiento de voz
+	 */
+	private void aceptar() {
+		try {
+			startActivity(new Intent(Intent.ACTION_VIEW,
+					Uri.parse("market://details?id=" + appName)));
+		} catch (android.content.ActivityNotFoundException anfe) {
+			startActivity(new Intent(Intent.ACTION_VIEW,
+					Uri.parse("http://play.google.com/store/apps/details?id="
+							+ appName)));
+		}
+	}
+
+	/**
+	 * Se ejecuta si se pulsa el botón cancelar en el cuadro de diálogo,
+	 * advierte que de este modo el modo voz no puede realizarse y cambia al
+	 * modo texto
+	 */
+	private void cancelar() {
+		Toast.makeText(this,
+				"Sin el software no está disponible esta funcionalidad",
+				Toast.LENGTH_LONG).show();
+		textMode();
+	}
+
+	/**
+	 * Cambia la interfaz al modo texto
 	 */
 	private void textMode() {
 		botonSend.setVisibility(View.VISIBLE);
@@ -308,6 +321,12 @@ public class SpeakFaceActivity extends Activity implements OnClickListener {
 
 	}
 
+	/**
+	 * Código que se encarga de establecer los parámetros de la petición post
+	 * 
+	 * @param vote
+	 *            Si es 1 es un voto positivo, si es 0 es un voto negativo
+	 */
 	private void doPost(String message) {
 		String rpi = preferences.getString(PreferencesActivity.PREFS_URL,
 				Url.RPI);
@@ -353,38 +372,45 @@ public class SpeakFaceActivity extends Activity implements OnClickListener {
 	}
 
 	/**
-	 * Instruct the app to listen for user speech input
+	 * Manda a la aplicación que escuche al usuario
 	 */
 	private void listenToSpeech() {
 
-		// start the speech recognition intent passing required data
+		// empieza el reconocimiento de voz
 		Intent listenIntent = new Intent(
 				RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-		// indicate package
+		// indica el paquete
 		listenIntent.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE,
 				getClass().getPackage().getName());
-		// message to display while listening
+		// Mensaje a mostrar mientras está escuchando
 		listenIntent.putExtra(RecognizerIntent.EXTRA_PROMPT,
 				"Diga la frase a enviar a la cara");
-		// set speech model
+		// Establece el modelo de lenguaje
 		listenIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
 				RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-		// specify number of results to retrieve
-		listenIntent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 10);
+		// especifica el número de resultados esperados
+		listenIntent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 1);
 
-		// start listening
+		// empieza a escuchar
 		startActivityForResult(listenIntent, VR_REQUEST);
 	}
 
 	/**
-	 * onActivityResults handles: - retrieving results of speech recognition
-	 * listening - retrieving result of TTS data check
+	 * Devuelve el resultado del reconocimiento
+	 * 
+	 * @param requestCode
+	 *            Código de la actuvudad
+	 * @param resultCode
+	 *            Código que indica si la actividad se ha realizado
+	 *            correctamente
+	 * @param data
+	 *            Resultado del reconocimiento
 	 */
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		// check speech recognition result
 		if (requestCode == VR_REQUEST && resultCode == RESULT_OK) {
-			// store the returned word list as an ArrayList
+			// Guarda los resultados en un array list
+			data.getDataString();
 			ArrayList<String> suggestedWords = data
 					.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
 			String mostProbableMessage = suggestedWords.get(0);
@@ -392,8 +418,6 @@ public class SpeakFaceActivity extends Activity implements OnClickListener {
 					Toast.LENGTH_SHORT).show();
 			doPost(mostProbableMessage);
 		}
-
-		// call superclass method
 		super.onActivityResult(requestCode, resultCode, data);
 	}
 

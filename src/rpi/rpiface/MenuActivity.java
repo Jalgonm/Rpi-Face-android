@@ -66,17 +66,7 @@ public class MenuActivity extends Activity implements OnClickListener {
 		botonHablar.setOnClickListener(this);
 		botonMover.setOnClickListener(this);
 		botonVotar.setOnClickListener(this);
-		// SharedPreferences preferences = PreferenceManager
-		// .getDefaultSharedPreferences(getApplicationContext());
-		// if (!preferences.contains(PreferencesActivity.PREFS_URL)
-		// || !preferences.contains(PreferencesActivity.PREFS_PORT)
-		// || !preferences.contains(PreferencesActivity.PREFS_PATH)) {
-		// preferences.edit()
-		// .putString(PreferencesActivity.PREFS_URL, Url.RPI)
-		// .putString(PreferencesActivity.PREFS_PORT, Url.RPI_PORT)
-		// .putString(PreferencesActivity.PREFS_PATH, Url.RPI_PATH)
-		// .commit();
-		// }
+
 	}
 
 	/**

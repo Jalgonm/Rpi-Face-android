@@ -29,6 +29,8 @@ import android.widget.Toast;
  * You should have received a copy of the GNU General Public License along with
  * Rpi-Face. If not, see <http://www.gnu.org/licenses/>.
  * <p>
+ * <p>
+ * Esta clase se encarga de realizar las votaciones al servidor
  * 
  * @author Francisco Javier García Gómez y Julio Alberto González Marín
  * @version 1.0
@@ -43,20 +45,28 @@ public class VoteActivity extends Activity implements OnClickListener {
 	 */
 	private static final String LOGTAG = SpeakFaceActivity.class
 			.getCanonicalName();
-
 	/**
-	 * Parámetro usado en la petición postS
+	 * Parámetro usado en la petición post
 	 */
 	private final String RPI_PARAM = "vote";
-	Button botonYes;
-	Button botonNo;
+	/**
+	 * Botón para votar positivo
+	 */
+	private Button botonYes;
+	/**
+	 * Botón para votar negativo
+	 */
+	private Button botonNo;
+	/**
+	 * Preferencias del usuario
+	 */
 	private SharedPreferences preferences;
 
-	/*
-	 * (non-Javadoc)
+	/**
+	 * Crea la actividad
 	 * 
-	 * @see android.app.Activity#onCreate(android.os.Bundle)
-	 */
+	 * @param savedInstanceState
+	 * */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -70,10 +80,11 @@ public class VoteActivity extends Activity implements OnClickListener {
 
 	}
 
-	/*
-	 * (non-Javadoc)
+	/**
+	 * Código que se ejecuta cuando se hace click en un objeto con detector
 	 * 
-	 * @see android.view.View.OnClickListener#onClick(android.view.View)
+	 * @param v
+	 *            Objeto sobre el cual se ha hecho click
 	 */
 	public void onClick(View v) {
 		switch (v.getId()) {
@@ -93,7 +104,14 @@ public class VoteActivity extends Activity implements OnClickListener {
 
 	}
 
+	/**
+	 * Código que se encarga de establecer los parámetros de la petición post
+	 * 
+	 * @param vote
+	 *            Si es 1 es un voto positivo, si es 0 es un voto negativo
+	 */
 	private void doPost(int vote) {
+
 		String voteString = Integer.toString(vote);
 		String rpi = preferences.getString(PreferencesActivity.PREFS_URL,
 				Url.RPI);
@@ -109,20 +127,20 @@ public class VoteActivity extends Activity implements OnClickListener {
 		postAsyncTask.execute(voteString, rpi, rpiPort, rpiPath, RPI_PARAM);
 	}
 
-	/*
-	 * (non-Javadoc)
+	/**
+	 * Se ejecuta cada vez que se llama al menú estando en la actividad
 	 * 
-	 * @see android.app.Activity#onCreateOptionsMenu(android.view.Menu)
+	 * @param menu
 	 */
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.activity_vote, menu);
 		return true;
 	}
 
-	/*
-	 * (non-Javadoc)
+	/**
+	 * Se ejecuta cuando se pulsa un botón del menu
 	 * 
-	 * @see android.app.Activity#onOptionsItemSelected(android.view.MenuItem)
+	 * @param item
 	 */
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {

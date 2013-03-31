@@ -29,9 +29,17 @@ import android.net.NetworkInfo;
  */
 
 public class ConnectionStatus {
-
+	/**
+	 * Contexto de la aplicación
+	 */
 	private Context _context;
 
+	/**
+	 * Crea un nuevo ConnectionStatus
+	 * 
+	 * @param context
+	 *            Contexto de la aplicación.
+	 */
 	public ConnectionStatus(Context context) {
 		this._context = context;
 	}

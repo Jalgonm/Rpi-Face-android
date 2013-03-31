@@ -42,17 +42,26 @@ import android.widget.Toast;
  */
 
 public class GetAsyncTask extends AsyncTask<String, Float, Boolean> {
-	// Etiqueta del log
+	/**
+	 * Etiqueta del log
+	 */
 	private static final String LOGTAG = GetAsyncTask.class.getCanonicalName();
 
+	/**
+	 * Contexto de la aplicación
+	 */
 	private Context context;
+
 	/**
 	 * Crea un nuevo GetAsyncTask.
-	 * @param context Contexto de la aplicación.
+	 * 
+	 * @param context
+	 *            Contexto de la aplicación.
 	 */
 	public GetAsyncTask(Context context) {
-		this.context=context;
+		this.context = context;
 	}
+
 	/**
 	 * Se ejecuta al principio
 	 */
@@ -110,18 +119,18 @@ public class GetAsyncTask extends AsyncTask<String, Float, Boolean> {
 	/**
 	 * Se ejecuta al final
 	 * 
-	 * @param result Resultado de la tarea en segundo plano
+	 * @param result
+	 *            Resultado de la tarea en segundo plano
 	 */
 	protected void onPostExecute(Boolean result) {
 		Log.i(LOGTAG + " Asynctask", "Async terminada");
 		if (!result) {
-			Toast.makeText(
-					context,
+			Toast.makeText(context,
 					"Hubo problemas con el servidor. Reinténtelo más tarde.",
 					Toast.LENGTH_SHORT).show();
 		} else {
-			Toast.makeText(context,
-					"Enviado correctamente.", Toast.LENGTH_SHORT).show();
+			Toast.makeText(context, "Enviado correctamente.",
+					Toast.LENGTH_SHORT).show();
 		}
 	}
 
