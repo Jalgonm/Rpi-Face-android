@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.app.Activity;
 import android.content.SharedPreferences;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -36,6 +37,11 @@ import android.widget.Toast;
  * 
  */
 public class PreferencesActivity extends Activity implements OnClickListener {
+	/**
+	 * Etiqueta del log
+	 */
+	private static final String LOGTAG = PreferencesActivity.class
+			.getCanonicalName();
 	/**
 	 * Nombre del campo para la URL en las preferencias
 	 */
@@ -98,6 +104,8 @@ public class PreferencesActivity extends Activity implements OnClickListener {
 		preferences = PreferenceManager
 				.getDefaultSharedPreferences(getApplicationContext());
 		loadPreferences(preferences);
+		Log.v(LOGTAG, "Actividad iniciada");
+
 	}
 
 	/**
@@ -113,6 +121,7 @@ public class PreferencesActivity extends Activity implements OnClickListener {
 		radioMode
 				.check(preferences.getBoolean(PREFS_MODE, true) ? R.id.prefs_radio_textMode
 						: R.id.prefs_radio_voiceMode);
+		Log.v(LOGTAG, "Preferencias cargadas en cada campo");
 	}
 
 	/**
@@ -120,6 +129,7 @@ public class PreferencesActivity extends Activity implements OnClickListener {
 	 */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
+		Log.v(LOGTAG, "Se pulsa el botón de menu");
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.activity_preferences, menu);
 		return true;
@@ -166,6 +176,7 @@ public class PreferencesActivity extends Activity implements OnClickListener {
 		preferences.edit().putString(PREFS_URL, url)
 				.putString(PREFS_PORT, port).putString(PREFS_PATH, path)
 				.putBoolean(PREFS_MODE, mode).commit();
+		Log.v(LOGTAG, "Se han guardado las preferencias");
 		return true;
 
 	}
@@ -178,6 +189,7 @@ public class PreferencesActivity extends Activity implements OnClickListener {
 		editUrl.setText(Url.RPI);
 		editPort.setText(Url.RPI_PORT);
 		editPath.setText(Url.RPI_PATH);
+		Log.v(LOGTAG, "Se han cargado las preferencias por defecto");
 	}
 
 	/**
@@ -186,14 +198,21 @@ public class PreferencesActivity extends Activity implements OnClickListener {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.prefs_button_ok:
-			if (savePreferences(preferences))
+			Log.v(LOGTAG, "Se pulsa el botón de ok");
+			if (savePreferences(preferences)) {
 				finish();
+			}
 			break;
 		case R.id.prefs_button_cancel:
+			Log.v(LOGTAG, "Se pulsa el botón de cancel");
 			finish();
 			break;
 		case R.id.prefs_button_restoreDefault:
+			Log.v(LOGTAG, "Se pulsa el botón de restaurar por defecto");
 			restoreDefault();
+			break;
+		default:
+			Log.e(LOGTAG, "Error, opción no implementada aún");
 			break;
 		}
 
