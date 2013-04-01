@@ -124,7 +124,7 @@ public class SpeakFaceActivity extends Activity implements OnClickListener {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		// Pone la vista activity_speak
-		setContentView(R.layout.activity_speakmod);
+		setContentView(R.layout.activity_speak);
 		currentMode = true;
 		Log.v(LOGTAG, "Se ha cargado la interfaz de SpeakFaceActivity");
 		// Asigna a cada botón su correspondiente botón gráfico

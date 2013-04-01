@@ -1,6 +1,5 @@
 package rpi.rpiface;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.app.Activity;
@@ -177,7 +176,7 @@ public class MoveFaceActivity extends Activity implements OnClickListener {
 				Url.RPI_PATH);
 
 		// Se crea un nuego getAsynctask para hacer la petición get.
-		AsyncTask<String, Float, Boolean> getAsyncTask = new GetAsyncTask(
+		GetAsyncTask getAsyncTask = new GetAsyncTask(
 				getApplicationContext());
 		// Se ejecuta el nuevo asynctask
 		getAsyncTask.execute(value, rpi, rpiPort, rpiPath, RPI_PARAM);

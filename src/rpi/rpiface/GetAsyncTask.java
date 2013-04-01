@@ -41,7 +41,7 @@ import android.widget.Toast;
  * 
  */
 
-public class GetAsyncTask extends AsyncTask<String, Float, Boolean> {
+public class GetAsyncTask extends AsyncTask<String, Void, Boolean> {
 	/**
 	 * Etiqueta del log
 	 */

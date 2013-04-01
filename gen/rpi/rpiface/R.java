@@ -22,20 +22,21 @@ public final class R {
         public static final int button_happy=0x7f070003;
         public static final int button_mover=0x7f070001;
         public static final int button_neutral=0x7f070007;
-        public static final int button_no=0x7f07001b;
-        public static final int button_record=0x7f070015;
+        public static final int button_no=0x7f07001d;
+        public static final int button_record=0x7f070017;
         public static final int button_sad=0x7f070004;
-        public static final int button_send=0x7f070017;
+        public static final int button_send=0x7f070016;
         public static final int button_surprised=0x7f070005;
-        public static final int button_text=0x7f070014;
-        public static final int button_voice=0x7f070013;
+        public static final int button_text=0x7f070015;
+        public static final int button_voice=0x7f070014;
         public static final int button_votar=0x7f070002;
-        public static final int button_yes=0x7f07001a;
-        public static final int editText_text=0x7f070016;
-        public static final int layout_mode=0x7f070018;
-        public static final int layout_send=0x7f070019;
-        public static final int menu_exit=0x7f07001d;
-        public static final int menu_settings=0x7f07001c;
+        public static final int button_yes=0x7f07001c;
+        public static final int editText_text=0x7f070019;
+        public static final int editText_view=0x7f070018;
+        public static final int layout_mode=0x7f07001a;
+        public static final int layout_send=0x7f07001b;
+        public static final int menu_exit=0x7f07001f;
+        public static final int menu_settings=0x7f07001e;
         public static final int prefs_button_cancel=0x7f07000a;
         public static final int prefs_button_ok=0x7f070009;
         public static final int prefs_button_restoreDefault=0x7f07000f;
@@ -47,6 +48,7 @@ public final class R {
         public static final int prefs_radio_mode=0x7f070010;
         public static final int prefs_radio_textMode=0x7f070011;
         public static final int prefs_radio_voiceMode=0x7f070012;
+        public static final int speak_layout_mode=0x7f070013;
     }
     public static final class layout {
         public static final int activity_menu=0x7f030000;

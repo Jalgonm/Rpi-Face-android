@@ -1,14 +1,13 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_alignParentBottom="true"
-    android:layout_alignParentLeft="true"
-    android:orientation="vertical" >
+    android:layout_height="match_parent" >
 
     <LinearLayout
+        android:id="@+id/speak_layout_mode"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true" >
 
         <Button
             android:id="@+id/button_voice"
@@ -24,29 +23,44 @@
             android:layout_weight="1"
             android:text="@string/text" />
     </LinearLayout>
-
+	
     <Button
-        android:id="@+id/button_record"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:text="@string/record" />
-
-    <EditText
-        android:id="@+id/editText_text"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:ems="10"
-        android:hint="@string/editText_text_hint"
-        android:inputType="textMultiLine" >
-    </EditText>
-
-    <Button
+        android:visibility="visible"
         android:id="@+id/button_send"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="@string/send" />
+        android:layout_centerHorizontal="true"
+        android:text="@string/send"
+        android:layout_alignParentBottom="true"
+         />
+    <Button
+        android:visibility="visible"
+        android:id="@+id/button_record"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="@string/record"
+        android:layout_above="@id/button_send"
+        android:layout_below="@id/speak_layout_mode"
+         />
 
-</LinearLayout>
+   
+    <ScrollView 
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/editText_view"
+        android:layout_below="@id/speak_layout_mode"
+        android:layout_above="@id/button_send"
+        >
+    <EditText
+        android:visibility="visible"
+        android:id="@+id/editText_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/editText_text_hint"
+        android:inputType="textMultiLine"
+         >
+    </EditText>
+	</ScrollView>
+
+</RelativeLayout>
