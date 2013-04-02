@@ -35,8 +35,8 @@ public final class R {
         public static final int editText_view=0x7f070018;
         public static final int layout_mode=0x7f07001a;
         public static final int layout_send=0x7f07001b;
-        public static final int menu_exit=0x7f07001f;
-        public static final int menu_settings=0x7f07001e;
+        public static final int menu_exit=0x7f070020;
+        public static final int menu_settings=0x7f07001f;
         public static final int prefs_button_cancel=0x7f07000a;
         public static final int prefs_button_ok=0x7f070009;
         public static final int prefs_button_restoreDefault=0x7f07000f;
@@ -49,6 +49,7 @@ public final class R {
         public static final int prefs_radio_textMode=0x7f070011;
         public static final int prefs_radio_voiceMode=0x7f070012;
         public static final int speak_layout_mode=0x7f070013;
+        public static final int splash_screen=0x7f07001e;
     }
     public static final class layout {
         public static final int activity_menu=0x7f030000;

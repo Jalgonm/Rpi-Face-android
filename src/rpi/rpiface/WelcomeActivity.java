@@ -5,6 +5,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.RelativeLayout;
 
 /**
  * Copyright (C) 2013 Javier García, Julio Alberto González
@@ -40,6 +44,8 @@ public class WelcomeActivity extends Activity {
 	 * Duración de la pantalla de bienvenida
 	 */
 	private static final long SPLASH_DISPLAY_LENGTH = 3500;
+	private Handler handler = new Handler();
+	private Runnable re = getRunnableStartApp();
 
 	/**
 	 * Crea la actividad
@@ -51,9 +57,22 @@ public class WelcomeActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		// Pone la vista activity_welcome
 		setContentView(R.layout.activity_welcome);
-		Handler handler = new Handler();
-		handler.postDelayed(getRunnableStartApp(), SPLASH_DISPLAY_LENGTH);
+
+		handler.postDelayed(re, SPLASH_DISPLAY_LENGTH);
+
 		Log.i(LOGTAG, "Actividad creada");
+		RelativeLayout rl = (RelativeLayout) findViewById(R.id.splash_screen);
+		rl.setOnClickListener(new OnClickListener() {
+
+			public void onClick(View arg0) {
+				handler = null;
+				Intent intent = new Intent(WelcomeActivity.this,
+						MenuActivity.class);
+				startActivity(intent);
+				finish();
+			}
+
+		});
 
 	}
 
@@ -68,11 +87,12 @@ public class WelcomeActivity extends Activity {
 			 * Inicia la actividad principal
 			 */
 			public void run() {
-
-				Intent intent = new Intent(WelcomeActivity.this,
-						MenuActivity.class);
-				startActivity(intent);
-				finish();
+				if (handler != null) {
+					Intent intent = new Intent(WelcomeActivity.this,
+							MenuActivity.class);
+					startActivity(intent);
+					finish();
+				}
 			}
 		};
 		return runnable;
