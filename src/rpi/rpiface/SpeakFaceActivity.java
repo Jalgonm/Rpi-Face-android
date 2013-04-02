@@ -356,7 +356,7 @@ public class SpeakFaceActivity extends Activity implements OnClickListener {
 	 * @param menu
 	 */
 	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.activity_speak, menu);
+		getMenuInflater().inflate(R.menu.activity_menu, menu);
 		return true;
 	}
 

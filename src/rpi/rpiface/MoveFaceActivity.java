@@ -176,8 +176,7 @@ public class MoveFaceActivity extends Activity implements OnClickListener {
 				Url.RPI_PATH);
 
 		// Se crea un nuego getAsynctask para hacer la petición get.
-		GetAsyncTask getAsyncTask = new GetAsyncTask(
-				getApplicationContext());
+		GetAsyncTask getAsyncTask = new GetAsyncTask(getApplicationContext());
 		// Se ejecuta el nuevo asynctask
 		getAsyncTask.execute(value, rpi, rpiPort, rpiPath, RPI_PARAM);
 
@@ -189,7 +188,7 @@ public class MoveFaceActivity extends Activity implements OnClickListener {
 	 * @param menu
 	 */
 	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.activity_move, menu);
+		getMenuInflater().inflate(R.menu.activity_menu, menu);
 		return true;
 	}
 

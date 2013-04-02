@@ -226,7 +226,7 @@ public class VoteActivity extends Activity implements OnClickListener {
 	 * @param menu
 	 */
 	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.activity_vote, menu);
+		getMenuInflater().inflate(R.menu.activity_menu, menu);
 		return true;
 	}
 

@@ -62,10 +62,7 @@ public final class R {
     }
     public static final class menu {
         public static final int activity_menu=0x7f060000;
-        public static final int activity_move=0x7f060001;
-        public static final int activity_preferences=0x7f060002;
-        public static final int activity_speak=0x7f060003;
-        public static final int activity_vote=0x7f060004;
+        public static final int activity_preferences=0x7f060001;
     }
     public static final class string {
         public static final int angry=0x7f040008;
