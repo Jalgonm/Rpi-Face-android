@@ -11,13 +11,23 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:text="@string/yes" />
+        android:drawableLeft="@drawable/ic_menu_markok"
+        android:drawablePadding="30dp"
+        android:gravity="left|center_vertical"
+        android:text="@string/yes"
+        android:textColor="@android:color/background_dark"
+        android:textSize="30sp" />
 
     <Button
         android:id="@+id/button_no"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:text="@string/no" />
+        android:drawableLeft="@drawable/ic_menu_close_clear_cancel"
+        android:drawablePadding="30dp"
+        android:gravity="left|center_vertical"
+        android:text="@string/no"
+        android:textColor="@android:color/background_dark"
+        android:textSize="30sp" />
 
 </LinearLayout>

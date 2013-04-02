@@ -1,0 +1,67 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <LinearLayout
+        android:id="@+id/speak_layout_mode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true" >
+
+        <Button
+            android:id="@+id/button_voice"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/voice"
+            android:textColor="@android:color/background_dark"
+            android:textSize="30sp" />
+
+        <Button
+            android:id="@+id/button_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/text"
+            android:textColor="@android:color/background_dark"
+            android:textSize="30sp" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/button_send"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:text="@string/send"
+        android:textColor="@android:color/background_dark"
+        android:textSize="30sp"
+        android:visibility="visible" />
+
+    <ImageButton
+        android:id="@+id/imageButton1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="@string/record_button_description"
+        android:src="@drawable/img_microphone" />
+
+    <ScrollView
+        android:id="@+id/button_record"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/button_send"
+        android:layout_below="@id/speak_layout_mode" >
+
+        <EditText
+            android:id="@+id/editText_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/editText_text_hint"
+            android:inputType="textMultiLine"
+            android:visibility="visible" >
+        </EditText>
+    </ScrollView>
+
+</RelativeLayout>

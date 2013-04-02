@@ -34,5 +34,6 @@
     <string name="prefs_radio_textMode">Texto</string>
     <string name="prefs_radio_voiceMode">Voz</string>
     <string name="editText_text_hint">Introduzca el texto a enviar a la cara</string>
+    <string name="record_button_description">Botón de grabar</string>
 
 </resources>

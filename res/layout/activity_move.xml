@@ -13,34 +13,49 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:text="@string/happy" />
+        android:gravity="left|center_vertical"
+        android:text="@string/happy"
+        android:textColor="@android:color/background_dark"
+        android:textSize="30sp" />
 
     <Button
         android:id="@+id/button_sad"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:text="@string/sad" />
+        android:gravity="left|center_vertical"
+        android:text="@string/sad"
+        android:textColor="@android:color/background_dark"
+        android:textSize="30sp" />
 
     <Button
         android:id="@+id/button_surprised"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:text="@string/surprised" />
+        android:gravity="left|center_vertical"
+        android:text="@string/surprised"
+        android:textColor="@android:color/background_dark"
+        android:textSize="30sp" />
 
     <Button
         android:id="@+id/button_angry"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:text="@string/angry" />
+        android:gravity="left|center_vertical"
+        android:text="@string/angry"
+        android:textColor="@android:color/background_dark"
+        android:textSize="30sp" />
 
     <Button
         android:id="@+id/button_neutral"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:text="@string/neutral" />
+        android:gravity="left|center_vertical"
+        android:text="@string/neutral"
+        android:textColor="@android:color/background_dark"
+        android:textSize="30sp" />
 
 </LinearLayout>

@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -20,10 +19,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 /**
@@ -76,7 +74,7 @@ public class SpeakFaceActivity extends Activity implements OnClickListener {
 	/**
 	 * Botón para grabar voz
 	 */
-	private Button botonRecord;
+	private ImageButton botonRecord;
 	/**
 	 * Botón para enviar el texto
 	 */
@@ -130,7 +128,7 @@ public class SpeakFaceActivity extends Activity implements OnClickListener {
 		// Asigna a cada botón su correspondiente botón gráfico
 		botonVoice = (Button) findViewById(R.id.button_voice);
 		botonText = (Button) findViewById(R.id.button_text);
-		botonRecord = (Button) findViewById(R.id.button_record);
+		botonRecord = (ImageButton) findViewById(R.id.button_record);
 		botonSend = (Button) findViewById(R.id.button_send);
 		editInsert = (EditText) findViewById(R.id.editText_text);
 
@@ -193,15 +191,6 @@ public class SpeakFaceActivity extends Activity implements OnClickListener {
 	 * Cambia la interfaz al modo voz
 	 */
 	private void voiceMode() {
-		botonSend.setVisibility(View.GONE);
-		editInsert.setVisibility(View.GONE);
-		botonRecord.setVisibility(View.VISIBLE);
-		currentMode = false;
-		Log.i(LOGTAG, "Se ha pasado al modo voz");
-		botonRecord.requestFocus();
-		getWindow().setSoftInputMode(
-				WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-
 		// Comprueba si se puede hacer reconocimiento de voz
 		PackageManager packManager = getPackageManager();
 		List<ResolveInfo> intActivities = packManager.queryIntentActivities(
@@ -210,6 +199,12 @@ public class SpeakFaceActivity extends Activity implements OnClickListener {
 			// Puede hacerse reconocimiento de voz
 			Log.v(LOGTAG, "El dispositivo permite hacer reconocimiento");
 			botonRecord.setOnClickListener(this);
+			botonSend.setVisibility(View.GONE);
+			editInsert.setVisibility(View.GONE);
+			editInsert.setText("");
+			botonRecord.setVisibility(View.VISIBLE);
+			currentMode = false;
+			Log.i(LOGTAG, "Se ha pasado al modo voz");
 
 		} else {
 			// El reconocimiento de voz no está soportado
@@ -273,9 +268,6 @@ public class SpeakFaceActivity extends Activity implements OnClickListener {
 		editInsert.setVisibility(View.VISIBLE);
 		botonRecord.setVisibility(View.GONE);
 		currentMode = true;
-		editInsert.requestFocus();
-		InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-		imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
 		Log.i(LOGTAG, "Se ha pasado al modo texto");
 	}
 
